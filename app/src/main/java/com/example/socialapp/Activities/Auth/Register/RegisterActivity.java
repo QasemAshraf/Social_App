@@ -13,6 +13,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -75,6 +77,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         btnReg.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
 
+        // hide ActionBar
+        Objects.requireNonNull(getSupportActionBar()).hide();
+
     }
 
     private void createUserAccount(User user) {
@@ -83,6 +88,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                        assert firebaseUser != null;
                         String id = firebaseUser.getUid();
                         user.setUserID(id);
                         saveUserToDataBase(id, user);
@@ -174,4 +180,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private void showMessage(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
+
+
+    // if you want to hide Statue Bar
+    private void hideStatueBar() {
+        Window window = getWindow();
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+                ,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        Objects.requireNonNull(getSupportActionBar()).hide();
+    }
+
 }

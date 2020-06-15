@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -54,9 +56,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mAuth = FirebaseAuth.getInstance();
 
-
+        // hide ActionBar
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
     }
+
+    // if you want to cancel Splash use it to check if user have account and login
 
 //    @Override
 //    protected void onStart() {
@@ -95,20 +100,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void signIn(String email, String password) {
 
         mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            loginProgressBar.setVisibility(View.INVISIBLE);
-                            btnLogin.setVisibility(View.VISIBLE);
-                            updateUI();
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        loginProgressBar.setVisibility(View.INVISIBLE);
+                        btnLogin.setVisibility(View.VISIBLE);
+                        updateUI();
 
-                        } else {
-                            showMessage(Objects.requireNonNull(task.getException()).getMessage());
-
-                        }
+                    } else {
+                        showMessage(Objects.requireNonNull(task.getException()).getMessage());
 
                     }
+
                 });
     }
 
@@ -120,6 +122,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void showMessage(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+
+    // if you want to hide Statue Bar
+    private void hideStatueBar() {
+        Window window = getWindow();
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+                ,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        Objects.requireNonNull(getSupportActionBar()).hide();
     }
 
 

@@ -63,17 +63,18 @@ public class PostDetailActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detail);
 
-        hidStatueBar();
+        hideStatueBar();
         iniView();
         getData();
     }
 
 
-    private void hidStatueBar() {
+    // if you want to hide Statue Bar
+    private void hideStatueBar() {
         Window window = getWindow();
         window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
                         ,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
     }
 
 
@@ -110,7 +111,7 @@ public class PostDetailActivity extends AppCompatActivity implements View.OnClic
     private void getData() {
 
         // get Post Id
-        PostKey = getIntent().getExtras().getString("postKey");
+        PostKey = Objects.requireNonNull(getIntent().getExtras()).getString("postKey");
 
         String userImg = getIntent().getExtras().getString("userPhoto");
         Glide.with(this).load(userImg).into(imgUserPost);
@@ -164,10 +165,7 @@ public class PostDetailActivity extends AppCompatActivity implements View.OnClic
             btnAddComment.setVisibility(View.VISIBLE);
 
 
-        }).addOnFailureListener(e -> {
-
-            showMessage("Fail To Add Comment : " + e.getMessage());
-        });
+        }).addOnFailureListener(e -> showMessage("Fail To Add Comment : " + e.getMessage()));
 
         // update show your comment
         iniRvComment();
