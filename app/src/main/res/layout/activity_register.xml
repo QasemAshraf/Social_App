@@ -41,6 +41,7 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.5" />
 
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
@@ -62,14 +63,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-
     <ImageView
         android:layout_width="0dp"
         android:layout_height="200dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:scaleType="fitCenter"
         android:src="@drawable/logo"
         app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guideline_start"
         app:layout_constraintTop_toTopOf="@+id/imageView" />
 
@@ -134,19 +136,16 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="32dp"
         android:background="@drawable/reg_btn_style"
-        android:padding="8dp"
         android:text="Create Account"
         android:textAllCaps="false"
         android:textColor="#ffffff"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/goToLogin_btn"
         app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-        app:layout_constraintStart_toStartOf="@+id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@+id/regPass2" />
+        app:layout_constraintStart_toStartOf="@+id/guideline_start" />
 
     <ProgressBar
         android:id="@+id/regProgressBar"

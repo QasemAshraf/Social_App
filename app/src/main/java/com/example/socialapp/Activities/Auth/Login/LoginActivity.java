@@ -83,17 +83,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             case R.id.loginBtn:
 
+                loginProgressBar.setVisibility(View.VISIBLE);
+                btnLogin.setVisibility(View.INVISIBLE);
+
                 final String email = loginEmail.getText().toString();
                 final String password = loginPass.getText().toString();
 
                 if (email.isEmpty() || password.isEmpty() ) {
                     showMessage("Please Verify All Field");
+                    loginProgressBar.setVisibility(View.INVISIBLE);
+                    btnLogin.setVisibility(View.VISIBLE);
                 } else {
                     signIn(email, password);
                 }
-
                 break;
-
         }
     }
 
@@ -102,11 +105,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        loginProgressBar.setVisibility(View.INVISIBLE);
-                        btnLogin.setVisibility(View.VISIBLE);
                         updateUI();
 
                     } else {
+                        loginProgressBar.setVisibility(View.INVISIBLE);
+                        btnLogin.setVisibility(View.VISIBLE);
                         showMessage(Objects.requireNonNull(task.getException()).getMessage());
 
                     }
